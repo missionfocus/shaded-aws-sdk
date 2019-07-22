@@ -48,7 +48,8 @@ publish:
     - JAR_LOCATION="target/$JAR_LOCATION"
     - echo $PROJECT_ARTIFACT_ID
     - echo $JAR_LOCATION
-    - mvn deploy:deploy-file -DgroupId=$PROJECT_GROUP_ID -DartifactId=shaded-aws-sdk -Dversion=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -DrepositoryId=internal.repo -Drepo.login=admin -Drepo.pwd=$NEXUS_PASS -Durl=https://nexus.missionfocus.com/repository/maven-releases/ -Dfile=$JAR_LOCATION
+    - env
+    - mvn deploy:deploy-file -DgroupId=$PROJECT_GROUP_ID -DartifactId=$PROJECT_ARTIFACT_ID -Dversion=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -DrepositoryId=internal.repo -Drepo.login=admin -Drepo.pwd=$NEXUS_PASS -Durl=https://nexus.missionfocus.com/repository/maven-releases/ -Dfile=$JAR_LOCATION
   only:
     - master
     - /^work.*$/
