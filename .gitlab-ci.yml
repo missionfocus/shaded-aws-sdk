@@ -44,6 +44,7 @@ publish:
     - PROJECT_GROUP_ID=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.groupId -q -DforceStdout`
     - PROJECT_ARTIFACT_ID=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.artifactId -q -DforceStdout`
     - JAR_LOCATION=`find -name shaded-aws*jar`
+    - echo $JAR_LOCATION
     - mvn deploy:deploy-file -DgroupId=$PROJECT_GROUP_ID -DartifactId=shaded-aws-sdk -Dversion=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -DrepositoryId=internal.repo -Drepo.login=admin -Drepo.pwd=$NEXUS_PASS -Durl=https://nexus.missionfocus.com/repository/maven-releases/ -Dfile=$JAR_LOCATION
   only:
     - master
