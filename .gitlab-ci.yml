@@ -1,7 +1,7 @@
 
 stages:
   - build
-
+  - publish
 build:
   tags:
     - privileged
@@ -30,7 +30,7 @@ publish:
     - privileged
 
   image: alpine:latest
-  stage: build
+  stage: publish
 
   before_script:
     - echo $CI_COMMIT_REF_NAME
