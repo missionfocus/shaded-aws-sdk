@@ -43,6 +43,7 @@ publish:
     - PROJECT_VERSION=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout`
     - PROJECT_GROUP_ID=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.groupId -q -DforceStdout`
     - PROJECT_ARTIFACT_ID=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.artifactId -q -DforceStdout`
+    - mvn clean install -DskipTests
     - JAR_LOCATION=`ls target | grep "^shaded.*jar"`
     - JAR_LOCATION="target/$JAR_LOCATION"
     - echo $PROJECT_ARTIFACT_ID
