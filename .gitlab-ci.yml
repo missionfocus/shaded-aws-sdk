@@ -52,7 +52,6 @@ publish:
     - mvn deploy:deploy-file -DgroupId=$PROJECT_GROUP_ID -DartifactId=$PROJECT_ARTIFACT_ID -Dversion=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -DrepositoryId=internal.repo -Drepo.login=admin -Drepo.pwd=$NEXUS_PASS -Durl=https://nexus.missionfocus.com/repository/maven-releases/ -Dfile=$JAR_LOCATION
   only:
     - master
-    - /^work.*$/
   except:
     variables:
       - $TEST_PUBLISH_ONLY == "TRUE"
