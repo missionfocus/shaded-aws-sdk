@@ -1,7 +1,3 @@
-include:
-  - { file: '/reusable/deploy-ci.yml', ref: 'master', project: 'devops/pipeline-templates' }
-  - { file: '/reusable/test-deploy-ci.yml', ref: 'master', project: 'devops/pipeline-templates' }
-  - { project: 'devops/pipeline-templates', file: '/reusable/timelog.yml', ref: 'master' }
 
 stages:
   - build
