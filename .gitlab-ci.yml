@@ -1,0 +1,43 @@
+include:
+  - { file: '/reusable/deploy-ci.yml', ref: 'master', project: 'devops/pipeline-templates' }
+  - { file: '/reusable/test-deploy-ci.yml', ref: 'master', project: 'devops/pipeline-templates' }
+  - { project: 'devops/pipeline-templates', file: '/reusable/timelog.yml', ref: 'master' }
+
+variables:
+  DOCKER_HOST: "tcp://0.0.0.0:2375"
+  TEST: "unknown"
+stages:
+  - build
+  - publish
+
+before_script:
+  - curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh | sudo bash
+  - sudo yum -y install gitlab-runner
+  - sudo hostname cloudtop.misisonfocus.com
+  - echo "export DISPLAY=:2" >> /opt/semapp/dotfiles/bashrc && source ~/.bashrc
+  - sudo ntpdate time.apple.com
+
+
+
+build:
+  tags:
+    - privileged
+
+  image: alpine:latest
+  stage: build
+
+  before_script:
+    - echo $CI_COMMIT_REF_NAME
+    - if git diff --quiet origin/master...$CI_COMMIT_REF_NAME --exit-code && [[ $TEST != "TRUE" ]]; then exit 0; fi
+    - apk update && apk add curl
+
+  script:
+    - mvn clean install -DskipTests
+
+  only:
+    - /^work.*$/
+  except:
+    variables:
+      - $TEST_PUBLISH_ONLY == "TRUE"
+      - $TEST == "FALSE"
+
