@@ -1,0 +1,3 @@
+com.shaded.amazonaws.services.sqs.QueueUrlHandler
+com.shaded.amazonaws.services.sqs.internal.SQSRequestHandler
+com.shaded.amazonaws.services.sqs.MessageMD5ChecksumHandler
