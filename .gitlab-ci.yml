@@ -1,3 +1,6 @@
+include:
+  - { project: 'ours/code/cicd/pipeline-templates', file: '/v4/universal.yml', ref: 'master' }
+
 
 stages:
   - build
