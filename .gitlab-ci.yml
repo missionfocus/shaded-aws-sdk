@@ -8,7 +8,7 @@ stages:
 build:
   extends: .local-testing
   tags:
-    - small
+    - large
 
   image: hub.missionfocus.com/ours/code/cicd/ci-images/centos/fullstack:master
 #  image: alpine:latest
