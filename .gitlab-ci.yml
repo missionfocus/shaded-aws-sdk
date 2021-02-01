@@ -9,7 +9,7 @@ build:
   image: hub.missionfocus.com/ours/code/cicd/ci-images/centos/fullstack:master
 #  image: alpine:latest
   stage: build
-
+  extends: .local-testing
 #  before_script:
 #    - echo $CI_COMMIT_REF_NAME
 #    - if git diff --quiet origin/master...$CI_COMMIT_REF_NAME --exit-code && [[ $TEST != "TRUE" ]]; then exit 0; fi
