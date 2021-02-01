@@ -10,11 +10,11 @@ build:
 #  image: alpine:latest
   stage: build
 
-  before_script:
-    - echo $CI_COMMIT_REF_NAME
-    - if git diff --quiet origin/master...$CI_COMMIT_REF_NAME --exit-code && [[ $TEST != "TRUE" ]]; then exit 0; fi
-    - apk update && apk add curl
-    - apk add maven
+#  before_script:
+#    - echo $CI_COMMIT_REF_NAME
+#    - if git diff --quiet origin/master...$CI_COMMIT_REF_NAME --exit-code && [[ $TEST != "TRUE" ]]; then exit 0; fi
+#    - apk update && apk add curl
+#    - apk add maven
   script:
     - mvn clean install -DskipTests
 
