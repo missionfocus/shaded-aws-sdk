@@ -6,7 +6,7 @@
 
     <groupId>shaded.aws</groupId>
     <artifactId>shaded-aws-sdk</artifactId>
-    <version>1.11.674</version>
+    <version>1.11.674-1</version>
     <dependencies>
         <dependency>
             <groupId>com.amazonaws</groupId>

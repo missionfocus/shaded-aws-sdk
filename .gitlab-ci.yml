@@ -4,9 +4,10 @@ stages:
   - publish
 build:
   tags:
-    - large
+    - small
 
-  image: alpine:latest
+  image: hub.missionfocus.com/ours/code/cicd/ci-images/centos/fullstack:master
+#  image: alpine:latest
   stage: build
 
   before_script:
@@ -27,9 +28,9 @@ build:
 
 publish:
   tags:
-    - large
-
-  image: alpine:latest
+    - small
+  image: hub.missionfocus.com/ours/code/cicd/ci-images/centos/fullstack:master
+#  image: alpine:latest
   stage: publish
 
   before_script:
