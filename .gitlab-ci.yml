@@ -38,7 +38,7 @@ publish:
 #    - apk add maven
   script:
  #   - mkdir -p /root/.m2/
-  #  - echo "<settings><servers><server><id>internal.repo</id><username>\${repo.login}</username><password>\${repo.pwd}</password></server></servers></settings>" >> ~/.m2/settings.xml
+    - echo "<settings><servers><server><id>internal.repo</id><username>\${repo.login}</username><password>\${repo.pwd}</password></server></servers></settings>" >> ~/.m2/settings.xml
     - PROJECT_VERSION=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout`
     - PROJECT_GROUP_ID=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.groupId -q -DforceStdout`
     - PROJECT_ARTIFACT_ID=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.artifactId -q -DforceStdout`
@@ -48,7 +48,7 @@ publish:
     - echo $PROJECT_ARTIFACT_ID
     - echo $JAR_LOCATION
     - env
-    - mvn deploy:deploy-file -DgroupId=$PROJECT_GROUP_ID -DartifactId=$PROJECT_ARTIFACT_ID -Dversion=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -DrepositoryId=internal.repo -Drepo.login=admin  -Durl=https://nexus.missionfocus.com/repository/maven-releases/ -Dfile=$JAR_LOCATION
+    - mvn deploy:deploy-file -DgroupId=$PROJECT_GROUP_ID -DartifactId=$PROJECT_ARTIFACT_ID -Dversion=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -DrepositoryId=internal.repo -Drepo.login=admin -Drepo.pwd=$LEIN_NEXUS_PASSWORD  -Durl=https://nexus.missionfocus.com/repository/maven-releases/ -Dfile=$JAR_LOCATION
   only:
     - master
     - dynamodb
