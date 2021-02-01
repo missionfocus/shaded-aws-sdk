@@ -29,6 +29,7 @@ publish:
     - large
   image: hub.missionfocus.com/ours/code/cicd/ci-images/centos/fullstack:master
   stage: publish
+  extends: .local-testing
 
 #  before_script:
 #    - echo $CI_COMMIT_REF_NAME
