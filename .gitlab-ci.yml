@@ -14,7 +14,7 @@ build:
   stage: build
   script:
     - mvn clean install -DskipTests
-
+    - cat ~/.m2/settings.xml
   only:
     - /^work.*$/
     - dynamodb
