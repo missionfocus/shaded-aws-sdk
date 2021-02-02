@@ -6,7 +6,7 @@
 
     <groupId>shaded.aws</groupId>
     <artifactId>shaded-aws-sdk</artifactId>
-    <version>1.11.674</version>
+    <version>1.11.674-1</version>
     <dependencies>
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -20,6 +20,11 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>1.11.674</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>

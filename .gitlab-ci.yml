@@ -1,24 +1,19 @@
+include:
+  - { project: 'ours/code/cicd/pipeline-templates', file: '/v4/universal.yml', ref: 'master' }
+
 
 stages:
   - build
   - publish
 build:
+  extends: .local-testing
   tags:
     - large
 
-  image: alpine:latest
+  image: hub.missionfocus.com/ours/code/cicd/ci-images/centos/fullstack:master
   stage: build
-
-  before_script:
-    - echo $CI_COMMIT_REF_NAME
-    - if git diff --quiet origin/master...$CI_COMMIT_REF_NAME --exit-code && [[ $TEST != "TRUE" ]]; then exit 0; fi
-    - apk update && apk add curl
-    - apk add maven
   script:
     - mvn clean install -DskipTests
-
-  only:
-    - /^work.*$/
   except:
     variables:
       - $TEST_PUBLISH_ONLY == "TRUE"
@@ -28,18 +23,11 @@ build:
 publish:
   tags:
     - large
-
-  image: alpine:latest
+  image: hub.missionfocus.com/ours/code/cicd/ci-images/centos/fullstack:master
   stage: publish
+  extends: .local-testing
 
-  before_script:
-    - echo $CI_COMMIT_REF_NAME
-    - if git diff --quiet origin/master...$CI_COMMIT_REF_NAME --exit-code && [[ $TEST != "TRUE" ]]; then exit 0; fi
-    - apk update && apk add curl
-    - apk add maven
   script:
-    - mkdir -p /root/.m2/
-    - echo "<settings><servers><server><id>internal.repo</id><username>\${repo.login}</username><password>\${repo.pwd}</password></server></servers></settings>" >> ~/.m2/settings.xml
     - PROJECT_VERSION=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout`
     - PROJECT_GROUP_ID=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.groupId -q -DforceStdout`
     - PROJECT_ARTIFACT_ID=`mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.artifactId -q -DforceStdout`
@@ -48,8 +36,7 @@ publish:
     - JAR_LOCATION="target/$JAR_LOCATION"
     - echo $PROJECT_ARTIFACT_ID
     - echo $JAR_LOCATION
-    - env
-    - mvn deploy:deploy-file -DgroupId=$PROJECT_GROUP_ID -DartifactId=$PROJECT_ARTIFACT_ID -Dversion=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -DrepositoryId=internal.repo -Drepo.login=admin -Drepo.pwd=$NEXUS_PASS -Durl=https://nexus.missionfocus.com/repository/maven-releases/ -Dfile=$JAR_LOCATION
+    - mvn deploy:deploy-file -DrepositoryId=nexus -DgroupId=$PROJECT_GROUP_ID -DartifactId=$PROJECT_ARTIFACT_ID -Dversion=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests -DfailIfNoTests=false -Dsurefire.useFile=false -Djava.awt.headless=true -Dmaven.antrun.skip=true -Durl=https://nexus.missionfocus.com/repository/maven-releases/  -Dfile=$JAR_LOCATION
   only:
     - master
   except:
