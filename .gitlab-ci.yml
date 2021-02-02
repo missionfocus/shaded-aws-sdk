@@ -48,7 +48,7 @@ publish:
     - echo $PROJECT_ARTIFACT_ID
     - echo $JAR_LOCATION
     - env
-    - mvn deploy:deploy-file -DgroupId=$PROJECT_GROUP_ID -DartifactId=$PROJECT_ARTIFACT_ID -Dverision=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests -DfailIfNoTests=false -Dsurefire.useFile=false -Djava.awt.headless=true -Dmaven.antrun.skip=true -DaltDeploymentRepository=releases::default::https://nexus.missionfocus.com/repository/maven-releases/  -Dfile=$JAR_LOCATION
+    - mvn deploy:deploy-file -DgroupId=$PROJECT_GROUP_ID -DartifactId=$PROJECT_ARTIFACT_ID -Dverision=$PROJECT_VERSION -DgeneratePom=true -Dpackaging=jar -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests -DfailIfNoTests=false -Dsurefire.useFile=false -Djava.awt.headless=true -Dmaven.antrun.skip=true -Durl=https://nexus.missionfocus.com/repository/maven-releases/  -Dfile=$JAR_LOCATION
   only:
     - master
     - dynamodb
